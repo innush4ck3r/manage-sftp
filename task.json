@@ -1,0 +1,76 @@
+{
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "networkMode": "bridge",
+    "taskRoleArn": "arn:aws:iam::{{account_number}}:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::{{account_number}}:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "name": "manage-sftp",
+            "image": "innobuz/manage-sftp",
+            "memoryReservation": 300,
+            "essential": true,
+            "portMappings": [
+                {
+                    "containerPort": 22,
+                    "hostPort": 2222,
+                    "protocol": "tcp"
+                }
+            ],
+            "linuxParameters": {
+                "capabilities": {
+                    "add": [
+                        "SYS_ADMIN"
+                    ],
+                    "drop": []
+                },
+                "sharedMemorySize": 123,
+                "tmpfs": [],
+                "devices": [
+                    {
+                        "containerPath": "/dev/fuse",
+                        "hostPath": "/dev/fuse",
+                        "permissions": [
+                            "read",
+                            "write"
+                        ]
+                    }
+                ],
+                "maxSwap": 123,
+                "swappiness": 123,
+                "initProcessEnabled": true
+            },
+            "environment": [
+                {
+                    "name": "ECS_ROLE_NAME",
+                    "value": "ecsInstanceRole"
+                },
+                {
+                    "name": "S3_BUCKET",
+                    "value": "true"
+                },
+                {
+                    "name": "USERS",
+                    "value": "user1:password:::your_directory_1:s3folder1here;user2:123:::your_directory_2:s3folder2here"
+                },
+                {   
+                    "name": "SSH_KEYS",
+                    "value": "user1@ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCNXk5K9oRMnk70qtcO7/DaoXBMAOz29pWwIGi97Ix8Akkg5XGEKmrdYpCnknkwKeCXUqWdvRnUz3GCNc02IgSSBXrVgeGl8eM/uhcjwE45sGeBiIIi6YX4qMsVH/11puD6JOcrSD6YVbRjx+q8/ArBHtZagYngKChJNDE4QN4sjQ==;user2@ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCNXk5K9oRMnk70qtcO7/DaoXBMAOz29pWwIGi97Ix8Akkg5XGEKmrdYpCnknkwKeCXUqWdvRnUz3GCNc02IgSSBXrVgeGl8eM/uhcjwE45sGeBiIIi6YX4qMsVH/11puD6JOcrSD6YVbRjx+q8/ArBHtZagYngKChJNDE4QN4sjQ=="
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/manage-sftp",
+                    "awslogs-region": "ap-south-1",
+                    "awslogs-create-group": "true",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            }
+        }
+    ],
+    "volumes": [],
+    "placementConstraints": [],
+    "family": "manage-sftp"
+}

@@ -1,0 +1,120 @@
+{
+    "executionRoleArn": "arn:aws:iam::{{ACCOUNT_NUMBER}}:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+        {
+            "dnsSearchDomains": null,
+            "environmentFiles": null,
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "secretOptions": null,
+                "options": {
+                    "awslogs-group": "/ecs/manage-sftp",
+                    "awslogs-region": "ap-south-1",
+                    "awslogs-create-group": "true",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "entryPoint": null,
+            "portMappings": [
+                {
+                    "hostPort": 2244,
+                    "protocol": "tcp",
+                    "containerPort": 22
+                }
+            ],
+            "command": null,
+            "linuxParameters": {
+                "capabilities": {
+                    "add": [
+                        "SYS_ADMIN"
+                    ],
+                    "drop": []
+                },
+                "sharedMemorySize": null,
+                "tmpfs": null,
+                "devices": [
+                    {
+                        "containerPath": "/dev/fuse",
+                        "hostPath": "/dev/fuse",
+                        "permissions": [
+                            "read",
+                            "write"
+                        ]
+                    }
+                ],
+                "maxSwap": null,
+                "swappiness": null,
+                "initProcessEnabled": null
+            },
+            "cpu": 0,
+            "environment": [
+                {
+                    "name": "ECS_ROLE_NAME",
+                    "value": "ecsInstanceRole"
+                },
+                {
+                    "name": "S3_BUCKET",
+                    "value": "true"
+                },
+                {
+                    "name": "USERS",
+                    "value": "user1:password:::your_directory_1:s3folder1here;user2:123:::your_directory_2:s3folder2here"
+                },
+                {
+                    "name": "SSH_KEYS",
+                    "value": "user1@ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCNXk5K9oRMnk70qtcO7/DaoXBMAOz29pWwIGi97Ix8Akkg5XGEKmrdYpCnknkwKeCXUqWdvRnUz3GCNc02IgSSBXrVgeGl8eM/uhcjwE45sGeBiIIi6YX4qMsVH/11puD6JOcrSD6YVbRjx+q8/ArBHtZagYngKChJNDE4QN4sjQ==;user2@ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCNXk5K9oRMnk70qtcO7/DaoXBMAOz29pWwIGi97Ix8Akkg5XGEKmrdYpCnknkwKeCXUqWdvRnUz3GCNc02IgSSBXrVgeGl8eM/uhcjwE45sGeBiIIi6YX4qMsVH/11puD6JOcrSD6YVbRjx+q8/ArBHtZagYngKChJNDE4QN4sjQ=="
+                }
+            ],
+            "resourceRequirements": null,
+            "ulimits": null,
+            "dnsServers": null,
+            "mountPoints": [],
+            "workingDirectory": null,
+            "secrets": null,
+            "dockerSecurityOptions": null,
+            "memory": null,
+            "memoryReservation": 300,
+            "volumesFrom": [],
+            "stopTimeout": null,
+            "image": "{{ACCOUNT_NUMBER}}.dkr.ecr.ap-south-1.amazonaws.com/cw-manage-sftp:latest",
+            "startTimeout": null,
+            "firelensConfiguration": null,
+            "dependsOn": null,
+            "disableNetworking": null,
+            "interactive": null,
+            "healthCheck": null,
+            "essential": true,
+            "links": null,
+            "hostname": null,
+            "extraHosts": null,
+            "pseudoTerminal": null,
+            "user": null,
+            "readonlyRootFilesystem": null,
+            "dockerLabels": null,
+            "systemControls": null,
+            "privileged": null,
+            "name": "manage-sftp"
+        }
+    ],
+    "placementConstraints": [],
+    "memory": null,
+    "taskRoleArn": "arn:aws:iam::{{ACCOUNT_NUMBER}}:role/ecsTaskExecutionRole",
+    "compatibilities": [
+        "EXTERNAL",
+        "EC2"
+    ],
+    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:{{ACCOUNT_NUMBER}}:task-definition/manage-sftp:15",
+    "family": "manage-sftp",
+    "requiresAttributes": [],
+    "pidMode": null,
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "networkMode": "bridge",
+    "cpu": null,
+    "revision": 15,
+    "status": "ACTIVE",
+    "inferenceAccelerators": null,
+    "proxyConfiguration": null,
+    "volumes": []
+}
